@@ -1,31 +1,7 @@
-# ANSIBLE DYNAMIC ASSIGNMENTS (INCLUDE) AND COMMUNITY ROLES
-
-In this project we will introduce dynamic assignments by using include module. The difference between static and dynamic assignment is that static assignments uses import module while dynamic assignment uses include module.
-
-Well, from Project 12, you can already tell that . The module that enables dynamic assignments is include.
-
-When the import module is used, all statements are pre-processed at the time playbooks are parsed. Meaning, when you execute site.yml playbook, Ansible will process all the playbooks referenced during the time it is parsing the statements. This also means that, during actual execution, if any statement changes, such statements will not be considered. Hence, it is static.
-
-On the other hand, when include module is used, all statements are processed only during execution of the playbook. Meaning, after the statements are parsed, any changes to the statements encountered during execution will be used.
-
-in most cases it is recommended to use static assignments for playbooks, because it is more reliable. With dynamic assignments, it is hard to debug playbook problems due to its dynamic nature. However, you can use dynamic assignments for environment specific variables as we will be introducing in this project.
-
-### INTRODUCING DYNAMIC ASSIGNMENT INTO OUR STRUCTURE
-
-We will make a copy of the Github `ansible-config-mgt` in the main branch and create a new branch dynamic-assignments.
-```
-git status
-```
-```
-git pull
-```
-```
-git checkout -b dynamic-assignment
-```
 
 ![Alt text](images/13.1.png)
 
-Create a new folder, name it dynamic-assignments. Then inside this folder, create a new file and name it env-vars.yml
+2. Create a new folder, name it dynamic-assignments. Then inside this folder, create a new file and name it env-vars.yml
 ![Alt text](images/13.2.png)
 
 3. create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables
