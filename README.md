@@ -106,72 +106,91 @@ Now it is time to upload the changes into your GitHub
 ![Alt text](images/13.7.png)
 
 ### Load Balancer roles
-    - We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
-    - install nginx and apache from geerlingguy using using ansible-galaxy
-    - from the Jenkin-ansible server, cd into roles
-    - ansible-galaxy install geerlingguy.nginx
-    - rename the folder to nginx
-        - mv geerlingguy.nginx/ nginx
-    - ansible-galaxy install geerlingguy.apache
-    - rename the folder to apache
-        -mv geerlingguy.apache/ apache
-    ![Alt text](images/13.8.png)
 
-9. configure both the apache and nginx roles with the README document
-    - for nginx, cd into nginx
-    - sudo vi \defaults/main.yml/
-        - edit ##nginx-upstreams
-        - check uat.yml and put 2 web UAT servers IP addresses
-            ![Alt text](images/13.9.png)
+We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
+- Nginx
+- Apache
+
+We will create _roles for Nginx and Apache from the community roles.
+
+Copy the link for the role
+
+![alt text](<Screenshot 2024-05-31 at 03.10.46.png>)
+
+![alt text](<Screenshot 2024-05-31 at 03.11.48.png>)
+
+Install nginx and apache from geerlingguy using using ansible-galaxy
+From the Jenkin-ansible server, cd into roles
+```
+cd roles
+```
+```
+ansible-galaxy install geerlingguy.nginx
+```
+Rename the folder to nginx
+``` 
+mv geerlingguy.nginx/ nginx
+```
+```
+ansible-galaxy install geerlingguy.apache
+```
+Rename the folder to apache
+``` 
+mv geerlingguy.apache/ apache
+```
+
+![Alt text](images/13.8.png)
+
+### configure both the apache and nginx roles
+For nginx, cd into nginx
+```
+cd nginx
+```
+```
+sudo vi \defaults/main.yml/
+```
+Edit ##nginx-upstreams
+Check uat.yml and put 2 web UAT servers IP addresses
+
+![Alt text](images/13.9.png)
         
-        - edit nginx_extra_http_option
-        - uncomment the ngnix_extra_http_option section
+Edit nginx_extra_http_option
+Uncomment the ngnix_extra_http_option section
 
+cd into task, edit main.yml
+```
+cd task
+```
+set up the ip address to web1 and web2 under the #vhost configuration
 
-        - cd into task, edit main.yml
-        - set up the ip address to web1 and web2 under the #vhost configuration
-        ![Alt text](images/13.17.png)
-        - under #nginx setup
-        - add become: true under the name
-          ![Alt text](images/13.10.png)  
+![Alt text](images/13.17.png)
 
-        - under setup/install tasks
-            - delete " or ansible _os_family == 'Rocky'  "
-            ![Alt text](images/13.11.png)
+under #nginx setup
+add become: true under the name
+         
+![Alt text](images/13.10.png)  
+
+under setup/install tasks
+delete " or ansible _os_family == 'Rocky'  "
+
+![Alt text](images/13.11.png)
         
-        - cd into template and edit nginx.conf.j2
-        -   sudo vi nginx.conf.j2
-        - nothing for now
-
-    - configure apache *************************************************
-    - cd into apache and config the main.yml of the defaults folder
-        - add this to the end of the file
-              loadbalancer_name: "myapp1"
-              web1: "172.31.47.212 "
-              web2: "172.31.35.241"
-        ![Alt text](images/13.12.png)
-        -  under apache_vhosts:
-        - add
-            - loadbalancer_name: "myapp1"
-
-        - edit the main.yml of the tasks folder
-
-        
-        - edit the setup-RedHat.yml under the task folder
-            - make beome: yes on the next line under name
-            - add this to the end of file
-            - name: set httpd_can_network_connect flag on and keep it persistent across reboots
-                become: yes
-                ansible.posix.seboolean:
-                name: httpd_can_network_connect
-                state: yes
-                persistent: yes
-        ![Alt text](images/13.13.png)
-        ***************************************************************************
-- edit sudo vi \roles/nginx/tasks/setup-RedHat.yml
+cd into template and edit nginx.conf.j2
+```
+sudo vi nginx.conf.j2
+```
+  
+Edit sudo vi \roles/nginx/tasks/setup-RedHat.yml
+```
+sudo vi \roles/nginx/tasks/setup-RedHat.yml
+```
 ![Alt text](images/13.15.png)
 
-- edit sudo vi \inventory/uat.yml
+Edit sudo vi \inventory/uat.yml
+```
+sudo vi \inventory/uat.yml
+```
+
 ![Alt text](images/13.16.png)
 
 9. Since you cannot use both Nginx and Apache load balancer, you need to add a condition to enable either one – this is where you can make use of variables.
