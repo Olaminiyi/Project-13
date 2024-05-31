@@ -31,17 +31,73 @@ Create a new folder, name it dynamic-assignments. Then inside this folder, creat
 
 create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables
 
+updated env-vars.yaml with the code below
+```
+---
+- name: collate variables from env specific file, if it exists
+  hosts: all
+  tasks:
+    - name: looping through list of available files
+      include_vars: "{{ item }}"
+      with_first_found:
+        - files:
+            - dev.yml
+            - stage.yml
+            - prod.yml
+            - uat.yml
+          paths:
+            - "{{ playbook_dir }}/../env-vars"
+      tags:
+        - always
+```
+
 ![Alt text](images/13.3.png)
+
+> [!NOTE] 
+> We used include_vars module instead of include. This is because Ansible developers decided to separate different features of the module. From Ansible version 2.8, the include module is deprecated and variants of include*_ must be used. These are:
+
+- include_role.
+- include_tasks.
+- include_vars.
+In the same version, variants of import were also introduced such as:
+
+- import_role
+- import_tasks
+
+We made use of a special variables { playbook_dir } and { inventory_file }. { playbook_dir } will help Ansible to determine the location of the running playbook, and from there navigate to other path on the filesystem. { inventory_file } on the other hand will dynamically resolve to the name of the inventory file being used, then append .yml so that it picks up the required file within the env-vars folder. We are including the variables using a loop.0__with_first_found__ implies that, looping through the list of files, the first one found is used. This is good so that we can always set default values in case an environment specific env file does not exist.
+
+### Update site.yml
 
 Update site.yml file to make use of the dynamic assignment.
 
+```
+---
+- hosts: all
+- name: Include dynamic variables 
+  tasks:
+  import_playbook: ../static-assignments/common.yml 
+  include: ../dynamic-assignments/env-vars.yml
+  tags:
+    - always
+
+-  hosts: webservers
+- name: Webserver assignment
+  import_playbook: ../static-assignments/webservers.yml
+```
+
 ![Alt text](images/13.4.png)
 
-Inside roles directory create your new MySQL role with ansible-galaxy install geerlingguy.mysql and rename the folder to mysql
+### DOWNLOAD MYSQL ANSIBLE ROLE
+
+to create a role for **MySQL database** – it should install the MySQL package, create a database and configure users. There are tons of roles that have already been developed by other open source engineers out there. These roles are actually production ready and dynamic to accomodate most of Linux flavours. We can simply download a ready to use ansible role.
+
+You can browse available community roles [here](https://galaxy.ansible.com/ui/)
+
+Inside roles directory create your new [MySQL role](https://galaxy.ansible.com/ui/standalone/roles/geerlingguy/mysql/) with ansible-galaxy install geerlingguy.mysql and rename the folder to mysql
 
 ![Alt text](images/13.5.png)
 
-Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
+Edit roles configuration to use correct credentials for MySQL required for the tooling website.
 
 ![Alt text](images/13.6.png)
 
