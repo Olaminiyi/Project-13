@@ -193,32 +193,51 @@ sudo vi \inventory/uat.yml
 
 ![Alt text](images/13.16.png)
 
-9. Since you cannot use both Nginx and Apache load balancer, you need to add a condition to enable either one – this is where you can make use of variables.
- - Declare a variable in defaults/main.yml file inside the Nginx and Apache roles. Name each variables enable_nginx_lb and enable_apache_lb respectively.
- - Set both values to false like this enable_nginx_lb: false and enable_apache_lb: false
- - Declare another variable in both roles load_balancer_is_required and set its value to false as well
+Since you cannot use both `Nginx` and `Apache load balancer`, you need to add a condition to enable either one – this is where you can make use of variables.
+
+ Declare a variable in `defaults/main.yml` file inside the `Nginx` and `Apache roles`. Name each variables `enable_nginx_lb` and `enable_apache_lb` respectively.
+
+ Set both values to false like this `enable_nginx_lb: false` and `enable_apache_lb: false`
+
+ - Declare another variable in both `roles` `load_balancer_is_required` and set its value to `false` as well
+
  ![nginx](images/13.18.png)
+
  ![Apache](images/13.19.png)
 
- - Update both assignment and site.yml files respectively
-    - created a new file named loadbalancers.yml in static assignment folder
-    - update it with
-    ![Alt text](images/13.20.png)
-    - create another file named database.yml
-    - update it with 
-    ![Alt text](images/13.21.png)
+Update both assignment and site.yml files respectively
+created a new file named `loadbalancers.yml` in static assignment folder
+Update it with
+ 
+![Alt text](images/13.20.png)
 
-    - update site.yml
-    ![Alt text](images/13.22.png)
+Create another file named database.yml
+Update it with 
 
-Now you can make use of env-vars\uat.yml file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true.
-You will activate load balancer, and enable nginx by setting these in the respective environment’s env-vars file.
-- cd into env-vars and update the uat.yml with this:
+![Alt text](images/13.21.png)
+
+Update site.yml
+
+![Alt text](images/13.22.png)
+
+Now you can make use of `env-vars\uat.yml` file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true.
+You will activate load balancer, and enable `nginx `by setting these in the respective environment’s `env-vars` file.
+cd into env-vars and update the uat.yml with this:
+```
+cd env-vars
+```
 ![Alt text](images/13.23.png)
 
-- Running the ansible playbook
- - ansible-playbook -i inventory/uat.yml playbooks/site.yml
-
+### Running the ansible playbook
+```
+ansible-playbook -i inventory/uat.yml playbooks/site.yml
+```
 ![Alt text](images/13.24.png)
+
 ![Alt text](images/13.25.png)
+
 ![Alt text](images/13.26.png)
+
+From the browser
+
+![alt text](<Screenshot 2024-05-31 at 03.28.41.png>)
