@@ -26,24 +26,30 @@ git checkout -b dynamic-assignment
 ![Alt text](images/13.1.png)
 
 Create a new folder, name it dynamic-assignments. Then inside this folder, create a new file and name it env-vars.yml
+
 ![Alt text](images/13.2.png)
 
-3. create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables
+create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables
+
 ![Alt text](images/13.3.png)
 
-4. Update site.yml file to make use of the dynamic assignment.
+Update site.yml file to make use of the dynamic assignment.
+
 ![Alt text](images/13.4.png)
 
-5. Inside roles directory create your new MySQL role with ansible-galaxy install geerlingguy.mysql and rename the folder to mysql
+Inside roles directory create your new MySQL role with ansible-galaxy install geerlingguy.mysql and rename the folder to mysql
+
 ![Alt text](images/13.5.png)
 
-6. Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
+Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
+
 ![Alt text](images/13.6.png)
 
-7. Now it is time to upload the changes into your GitHub
+Now it is time to upload the changes into your GitHub
+
 ![Alt text](images/13.7.png)
 
-8. Load Balancer roles
+### Load Balancer roles
     - We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
     - install nginx and apache from geerlingguy using using ansible-galaxy
     - from the Jenkin-ansible server, cd into roles
