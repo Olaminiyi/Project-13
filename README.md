@@ -29,7 +29,7 @@ Create a new folder, name it dynamic-assignments. Then inside this folder, creat
 
 ![Alt text](images/13.2.png)
 
-create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables
+create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables.
 
 updated env-vars.yaml with the code below
 ```
