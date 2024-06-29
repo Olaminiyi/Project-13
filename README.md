@@ -2,7 +2,7 @@
 
 In this project we will introduce dynamic assignments by using include module. The difference between static and dynamic assignment is that static assignments uses import module while dynamic assignment uses include module.
 
-Well, from Project 12, you can already tell that . The module that enables dynamic assignments is include.
+Well, from Project 12, you can already tell that . The module that enables dynamic assignments is include
 
 When the import module is used, all statements are pre-processed at the time playbooks are parsed. Meaning, when you execute site.yml playbook, Ansible will process all the playbooks referenced during the time it is parsing the statements. This also means that, during actual execution, if any statement changes, such statements will not be considered. Hence, it is static.
 
