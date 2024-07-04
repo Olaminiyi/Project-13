@@ -16,7 +16,7 @@
 6. Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
 ![Alt text](images/13.6.png)
 
-7. Now it is time to upload the changes into your GitHub
+7. Now it is time to upload the changes into your GitHub.
 ![Alt text](images/13.7.png)
 
 8. Load Balancer roles
